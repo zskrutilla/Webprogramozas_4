@@ -1,0 +1,16 @@
+body {
+    font-family: system-ui, sans-serif;
+    max-width: 680px;
+    margin: 2rem auto;
+    background-color: #25dbde35;
+}
+
+.card {
+    border: 1px solid #ff000087;
+    border-radius: 15px;
+    padding: 1rem;
+}
+
+.row {
+    margin: .25rem 0;
+}
