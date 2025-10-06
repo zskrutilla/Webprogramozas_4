@@ -1,0 +1,23 @@
+body {
+    font-family: system-ui, sans-serif;
+    max-width: 680px;
+    margin: 2rem auto;
+}
+
+input {
+    padding: .5rem;
+    width: 100%;
+    margin-bottom: .5rem;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: .5rem;
+}
+
+.result {
+    margin-top: 1rem;
+    font-weight: 600;
+    font-style: italic;
+}
