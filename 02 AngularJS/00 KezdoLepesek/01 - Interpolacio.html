@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="hu" ng-app>
+
+<head>
+  <meta charset="utf-8" />
+  <title>01 - Interpoláció</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.3/angular.min.js"></script>
+</head>
+
+<body>
+  <h1>Adatkötés – nagyon egyszerű demó</h1>
+
+  <!-- Kétirányú kötés: ng-model -->
+  <label>Név:
+    <input type="text" ng-model="user.name" placeholder="Írd be a neved…">
+  </label>
+
+  <label>Kor:
+    <input type="number" ng-model="user.age" min="0" placeholder="pl. 18">
+  </label>
+
+  <label>Kedvenc szín:
+    <select ng-model="user.color">
+      <option value="">– válassz –</option>
+      <option>piros</option>
+      <option>zöld</option>
+      <option>kék</option>
+    </select>
+  </label>
+
+  <label>
+    <input type="checkbox" ng-model="user.subscribed">
+    Fel vagyok iratkozva a hírlevélre
+  </label>
+
+  <!-- Egyirányú kiírás: {{ }} -->
+  <div class="card">
+    <h2>Előnézet</h2>
+    <p>
+      Helló, <strong>{{ user.name || 'ismeretlen' }}</strong>!
+      <span ng-if="user.age">Te {{ user.age }} éves vagy.</span>
+      <span ng-if="!user.age" class="muted">(kor nincs megadva)</span><br>
+      Kedvenc szín: <em>{{ user.color || '—' }}</em><br>
+      Hírlevél: <strong>{{ user.subscribed ? 'feliratkozva' : 'nincs feliratkozva' }}</strong>
+    </p>
+    <p class="muted">Nyers objektum (debug):</p>
+    <pre>{{ user | json }}</pre>
+  </div>
+
+  <p class="muted">Tipp: ahogy gépelsz az inputokba, a fenti rész azonnal frissül – ez a kétirányú adatkötés.</p>
+</body>
+
+</html>
