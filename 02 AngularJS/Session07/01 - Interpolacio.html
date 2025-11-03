@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="hu" ng-app>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <title>01 - Interpoláció</title>
+</head>
+
+<body>
+    <h1>Adatkötés - nagyon egyszerű demó</h1>
+
+    <!-- Kétirányú kötés -->
+    <label>Név:
+        <input type="text" ng-model="user.name" placeholder="Írd be a neved...">
+    </label>
+
+    <label>Kor:
+        <input type="number" ng-model="user.age" min="0" placeholder="pl. 18">
+    </label>
+
+    <label>Kedvenc szín:
+        <select ng-model="user.color">
+            <option value="">- válassz -</option>
+            <option>piros</option>
+            <option>zöld</option>
+            <option>kék</option>
+        </select>
+    </label>
+
+    <label>
+        <input type="checkbox" ng-model="user.subsc">
+        Fel vagyok iratkozva
+    </label>
+
+
+    <div>
+        <h2>Előnézet</h2>
+        <p>
+            Helló, <strong>{{user.name || 'ismeretlen'}}</strong>!
+            <span ng-if="user.age">Te {{user.age}} éves vagy.</span>
+            <span ng-if="!user.age">(kor nincs megadva)</span>
+            Kedvenc szín: {{user.color || '-'}}
+            Hírlevél: {{user.subsc ? 'feliratkozva' : 'nincs feliratkozva'}}
+        </p>
+    </div>
+
+</body>
+
+</html>
