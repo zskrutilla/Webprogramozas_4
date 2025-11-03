@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="hu" ng-app="app5">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Termékkonfigurátor – AngularJS</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.3/angular.min.js"></script>
+    <style>
+        .color-box {
+            width: 40px;
+            height: 40px;
+            border-radius: 6px;
+            border: 1px solid #dee2e6;
+        }
+    </style>
+</head>
+
+<body ng-controller="Cfg as vm" class="bg-light">
+    <div class="container py-4">
+        <h1 class="mb-4">Termékkonfigurátor</h1>
+
+        <div class="row g-4">
+            <div class="col-md-6">
+                <form class="card card-body shadow-sm">
+                    <div class="mb-3">
+                        <label class="form-label">Alapár (Ft)</label>
+                        <input type="number" min="0" class="form-control" ng-model="vm.base" placeholder="pl. 12000">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Méret</label>
+                        <div class="btn-group" role="group">
+                            <input type="radio" class="btn-check" id="s" ng-model="vm.size" value="S">
+                            <label class="btn btn-outline-primary" for="s">S</label>
+                            <input type="radio" class="btn-check" id="m" ng-model="vm.size" value="M">
+                            <label class="btn btn-outline-primary" for="m">M</label>
+                            <input type="radio" class="btn-check" id="l" ng-model="vm.size" value="L">
+                            <label class="btn btn-outline-primary" for="l">L</label>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Szín</label>
+                        <select class="form-select" ng-model="vm.color"
+                            ng-options="c as c.name for c in vm.colors"></select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Extrák</label>
+                        <div class="form-check">
+                            <input id="logo" class="form-check-input" type="checkbox" ng-model="vm.extras.logo">
+                            <label for="logo" class="form-check-label">Logó (+1500 Ft)</label>
+                        </div>
+                        <div class="form-check">
+                            <input id="prem" class="form-check-input" type="checkbox" ng-model="vm.extras.premium">
+                            <label for="prem" class="form-check-label">Prémium anyag (+3000 Ft)</label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card shadow-sm">
+                    <div class="card-header d-flex align-items-center">
+                        <div class="color-box me-3" ng-style="{'background': vm.color.hex}"></div>
+                        <div>
+                            <div><strong>Előnézet</strong></div>
+                            <small class="text-muted">Szín: {{ vm.color.name }}, Méret: {{ vm.size }}</small>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-unstyled mb-3">
+                            <li>Alapár: {{ vm.base | number:0 }} Ft</li>
+                            <li>Szín szorzó: {{ (vm.color.factor*100 - 100) | number:0 }}%</li>
+                            <li>Méret szorzó: {{ (vm.sizeFactor(vm.size)*100 - 100) | number:0 }}%</li>
+                            <li>Logó: {{ vm.extras.logo ? 'igen (+1500)' : 'nem' }}</li>
+                            <li>Prémium: {{ vm.extras.premium ? 'igen (+3000)' : 'nem' }}</li>
+                        </ul>
+                        <h4 class="text-success">Végső ár: {{ vm.finalPrice() | number:0 }} Ft</h4>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-muted">Debug:</small>
+                        <pre class="mb-0">{{ {base:vm.base,size:vm.size,color:vm.color,extras:vm.extras} | json }}</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        angular.module('app5', [])
+            .controller('Cfg', function () {
+                var vm = this;
+                vm.base = 12000;
+                vm.size = 'M';
+                vm.colors = [
+                    { name: 'Fehér', hex: '#ffffff', factor: 1.00 },
+                    { name: 'Fekete', hex: '#000000', factor: 1.05 },
+                    { name: 'Kék', hex: '#0d6efd', factor: 1.05 }
+                ];
+                vm.color = vm.colors[0];
+                vm.extras = { logo: false, premium: false };
+
+                vm.sizeFactor = function (s) {
+                    return s === 'S' ? 1.00 : s === 'M' ? 1.10 : 1.20;
+                };
+                vm.finalPrice = function () {
+                    var base = Math.max(0, +vm.base || 0);
+                    var price = base * vm.color.factor * vm.sizeFactor(vm.size);
+                    if (vm.extras.logo) price += 1500;
+                    if (vm.extras.premium) price += 3000;
+                    return Math.round(price);
+                };
+            });
+    </script>
+</body>
+
+</html>
