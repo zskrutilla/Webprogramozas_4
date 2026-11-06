@@ -15,7 +15,7 @@
         <div class="mb-3">
             <label class="form-label">E-mail</label>
             <input name="em" type="email" class="form-control" ng-model="vm.email" required>
-            <div class="form-text text-danger" ng-if="f.em.$touched && f.em.$invalid">
+            <div class="form-text text-danger" ng-if="f.em.$touched && f.em.$invalid"> /*A f.em.$touched azt jelzi, hogy a mezőre fókuszáltak-e már, a f.em.$invalid pedig azt, hogy érvénytelen-e a mező. Ha mindkettő igaz, akkor megjelenik a hibaüzenet. */ 
                 Adj meg érvényes e-mail címet!
             </div>
         </div>
